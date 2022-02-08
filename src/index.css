@@ -11,7 +11,7 @@ body{
   width: 100%;
   min-height: 100vh;
   background-attachment: fixed;
-  background-image: url('./assets/images/background.png');
+  background-image: url(https://storage.googleapis.com/assets-impregnarte/images/background.png);
   background-position: center 80px;
   background-repeat: no-repeat;
   background-size: cover;

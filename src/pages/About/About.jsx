@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Main, H1, H2, Img } from "./AboutStyles";
+import { Main, H1, H2 } from "./AboutStyles";
 
 function About(){
     useEffect(() => {

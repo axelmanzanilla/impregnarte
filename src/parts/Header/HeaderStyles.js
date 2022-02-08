@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import isotipoImage from '../../assets/images/isotipo.png';
-import menuImage from '../../assets/icons/menu_white.svg';
 
 const theme = {
     height: '80px',
@@ -44,7 +42,7 @@ export const Isotipo = styled.i`
     width: 52px;
     height: 52px;
     margin: 0 12px 4px 12px;
-    background: top / contain no-repeat url(${isotipoImage});
+    background: top / contain no-repeat url(https://storage.googleapis.com/assets-impregnarte/images/isotipo.png);
 `;
 
 export const Logotipo = styled.p`
@@ -58,7 +56,7 @@ export const HamburguerButton = styled.button`
     height: 48px;
     margin: 0 12px 0 0;
     border: none;
-    background: center / contain no-repeat url(${menuImage});
+    background: center / contain no-repeat url(https://storage.googleapis.com/assets-impregnarte/icons/menu_white.svg);
 
     @media (min-width: 768px){
         display: none;

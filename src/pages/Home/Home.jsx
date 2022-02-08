@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Main, Welcome } from "./HomeStyles";
+import Banner from "../../components/Banner/Banner";
 import Slider from "../../components/Slider/Slider";
 import Map from "../../components/Map/Map";
 
@@ -8,9 +9,9 @@ function Home(){
         document.title = "Impregnarte";
     }, []);
 
-
     return(
         <Main>
+            <Banner />
             <Welcome>¡Bienvenido a nuestra página web!</Welcome>
             <Slider />
             <Map />
