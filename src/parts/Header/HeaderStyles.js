@@ -22,7 +22,7 @@ export const HeaderNavbar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 100vw;
     height: ${theme.height};
     background-color: ${theme.backgroundColor};
     @media (min-width: 768px){
@@ -110,7 +110,7 @@ export const NavMob = styled.nav.attrs({
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 100vw;
     height: ${theme.dropdownHeight};
     margin-top: ${theme.height};
     background-color: ${theme.backgroundColor};

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { FlipbookContainer, Flipbook as FlipbookComponent, Page, Download } from "./FlipbookStyles";
+import React, { useEffect, useState } from "react";
+import HTMLFlipBook from "react-pageflip";
+import { Page } from "./FlipbookStyles";
 import Loading from "../Loading/Loading";
 
-function Flipbook(props){
+function Flipbook(props) {
     const [images, setImages] = useState();
 
     const getSliderImages = async function(){
@@ -19,34 +20,29 @@ function Flipbook(props){
     useEffect(() => {
         getSliderImages();
     }, []);
+    const res = 300;
 
-    useEffect(() => {
-        if(images){
-            // Agregar el javascript del slider a la página
-            const script = document.createElement('script');
-            script.src = `https://storage.googleapis.com/assets-impregnarte/js/turn-${props.id}.js`;
-            script.async = false;
-            document.body.appendChild(script);
-
-            return () => {
-                document.body.removeChild(script);
-            }
-        }
-    }, [images]);
-
-    return(
-        <FlipbookContainer>
-            <FlipbookComponent className={props.id}>
-            {
-                !images ? ( <Loading /> ) :
-                (
-                    images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
-                )
-            }
-            </FlipbookComponent>
-            <Download href={props.link} download>Descargar catálogo</Download>
-        </FlipbookContainer>
-    )
+    return (
+            <div>
+                {
+                    !images ? ( <Loading /> ) :
+                    (
+                        <HTMLFlipBook
+                            width={res}
+                            height={res}
+                            minWidth={res}
+                            minHeight={res}
+                            flippingTime={800}
+                            size={"stretch"}
+                            maxShadowOpacity = {0.8}>
+                        {
+                            images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
+                        }
+                        </HTMLFlipBook>
+                    )
+                }
+            </div>
+    );
 }
 
 export default Flipbook;
