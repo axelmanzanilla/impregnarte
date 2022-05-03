@@ -1,3 +1,5 @@
+// Está en desuso, era para el antiguo catalogo, se usa para agregar scripts
+
 import { useEffect } from 'react';
 
 const useScript = (url, asyn) => {

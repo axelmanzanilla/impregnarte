@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Main, H2, Download } from "./CatalogueStyles";
+import { ElInput, ElDiv, Main, Combo, Label, Select, ButtonsContainer, Button, FlipbookContainer, Download, Next, Previous } from "./CatalogueStyles";
 import { Page } from "../../components/Flipbook/FlipbookStyles";
 import Loading from "../../components/Loading/Loading";
 import HTMLFlipBook from "react-pageflip";
 
 function Catalogue(){
     const [images, setImages] = useState();
+    const [flipPageWidth, setFlipPageWidth] = useState("");
+    const [flipPageHeight, setFlipPageHeight] = useState("");
 
     const getSliderImages = async function(id){
         try {
@@ -19,63 +21,66 @@ function Catalogue(){
     }
 
     useEffect(() => {
-        document.title = "Catálogo"
+        document.title = "Catálogo";
+        setFlipPageWidth(window.innerWidth);
+        setFlipPageHeight(window.innerHeight - 80); // Header 80px
         getSliderImages("val");
     }, []);
+
+    // Variables del react-pageflip
     const res = 300;
     const book = useRef();
 
     return(
         <Main>
-            <select name="" id="" onChange={e => getSliderImages(e.target.value)}>
-                <option value="val">Valentin</option>
-                <option value="old">Normal</option>
-            </select>
-            Indice:
-            <select name="" id="" onChange={e => book.current.pageFlip().flip(parseInt(e.target.value))}>
-                <option value="0">Inicio</option>
-                <option value="2">Llaveros de MDF</option>
-                <option value="3">Mousepads</option>
-                <option value="7">Portaretrato de piedra</option>
-                <option value="8">Vaso térmico de acero</option>
-                <option value="10">Tarro Mason</option>
-                <option value="12">Tarro Cervecero</option>
-                <option value="14">Botella de Aluminio</option>
-                <option value="16">Taza con asa de corazón</option>
-                <option value="18">Taza blanca de corazón</option>
-                <option value="20">Pareja de tazas</option>
-                <option value="25">Taza cónica</option>
-                <option value="28">Taza blanca</option>
-            </select>
-            <br />
-            {
-                !images ? ( <Loading /> ) :
-                (
-                    <HTMLFlipBook
-                        width={res}
-                        height={res}
-                        minWidth={res}
-                        minHeight={res}
-                        flippingTime={800}
-                        ref={book}
-                        size={"stretch"}
-                        maxShadowOpacity = {0.8}>
-                    {
-                        images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
-                    }
-                    </HTMLFlipBook>
-                )
-            }
-            <button onClick={() => book.current.pageFlip().flipPrev()}>Atras</button>
-            <button>Descargar</button>
-            <button onClick={() => book.current.pageFlip().flipNext(4)}>Adelante</button>
+            {/* <label htmlFor="menu">Cerrar</label> */}
+            <ElInput type="checkbox" name="menu" id="menu" />
+            <ElDiv>
+                <h2>Índice</h2>
+                <label htmlFor="menu">Cerrar2</label>
+                <ul>
+                    <li onClick={e => book.current.pageFlip().flip(1)}>Cerámicas</li>
+                    <li onClick={e => book.current.pageFlip().flip(6)}>Vidrios</li>
+                    <li onClick={e => book.current.pageFlip().flip(8)}>Aceros</li>
+                    <li onClick={e => book.current.pageFlip().flip(12)}>Aluminio</li>
+                    <li onClick={e => book.current.pageFlip().flip(13)}>Textil</li>
+                    <li onClick={e => book.current.pageFlip().flip(18)}>Gorras</li>
+                    <li onClick={e => book.current.pageFlip().flip(19)}>Llaveros</li>
+                </ul>
+            </ElDiv>
+            <FlipbookContainer>
+                {/* <Combo>
+                    <Label htmlFor="catalogue">Catálogo</Label>
+                    <Select name="catalogue" id="catalogue" onChange={e => getSliderImages(e.target.value)}>
+                        <option value="val">10 de Mayo</option>
+                        <option value="old">Normal</option>
+                    </Select>
+                </Combo> */}
+                {
+                    !images ? ( <Loading /> ) :
+                    (
+                        <HTMLFlipBook
+                            width={flipPageWidth}
+                            height={flipPageHeight}
+                            minWidth={flipPageWidth}
+                            minHeight={flipPageHeight}
+                            flippingTime={800}
+                            ref={book}
+                            size={"stretch"}
+                            maxShadowOpacity = {0.8}>
+                        {
+                            images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
+                        }
+                        </HTMLFlipBook>
+                    )
+                }
+            </FlipbookContainer>
+            
+            <Next onClick={() => book.current.pageFlip().flipPrev()}>&lt;</Next>
+            <Previous onClick={() => book.current.pageFlip().flipNext()}>&gt;</Previous>
+            <Download>Descargar</Download>
         </Main>
     )
 }
-/*
-    
-            <Flipbook id="val" link="/downloads/Catalogo Febrero 2022.pdf"/>
-            <H2>Catálogo de tazas y tarros</H2>
-            <Flipbook id="old" link="/downloads/Catalogo Febrero 2022.pdf" />
-             */
+
 export default Catalogue;

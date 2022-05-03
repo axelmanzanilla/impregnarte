@@ -4,7 +4,7 @@ export const Main = styled.main`
     display: flex;
     flex-direction: column;
     padding: 20px;
-}`;
+`;
 
 export const H1 = styled.h1`
     margin: 12px 0 20px 0;

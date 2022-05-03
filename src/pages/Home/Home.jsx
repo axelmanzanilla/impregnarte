@@ -11,7 +11,6 @@ function Home(){
 
     return(
         <Main>
-            <Banner />
             <Welcome>¡Bienvenido a nuestra página web!</Welcome>
             <Slider />
             <Map />
