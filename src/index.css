@@ -33,7 +33,8 @@ footer{
 /* SCROLLBAR */
 @media (min-width: 768px){
   body{
-      overflow: overlay;
+      overflow-y: overlay;
+      overflow-x: hidden;
   }
 
   ::-webkit-scrollbar{

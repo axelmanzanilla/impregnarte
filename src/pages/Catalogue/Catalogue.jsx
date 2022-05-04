@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Main, FlipbookContainer, Download, Next, Previous } from "./CatalogueStyles";
+import { Main, PortraitFlipbook, FlipbookContainer, Download, Next, Previous } from "./CatalogueStyles";
 import { Checkbox, IndexSlide, IndexContainer, IndexIcon, IndexTitle, Index, IndexElem } from "./CatalogueStyles";
 import { Page } from "../../components/Flipbook/FlipbookStyles";
 import Loading from "../../components/Loading/Loading";
 import HTMLFlipBook from "react-pageflip";
 
 function Catalogue(){
+    const book = useRef();
     const [images, setImages] = useState();
     const [flipPageWidth, setFlipPageWidth] = useState("");
     const [flipPageHeight, setFlipPageHeight] = useState("");
@@ -21,67 +22,72 @@ function Catalogue(){
         }
     }
 
+    const flipPage = function(page){
+        book.current.pageFlip().flip(page);
+        document.querySelector('.index-checkbox').checked = false;
+    }
+
     useEffect(() => {
         document.title = "Catálogo";
-        setFlipPageWidth(window.innerWidth);
+        if(window.innerWidth < 768) setFlipPageWidth(window.innerWidth);
+        else setFlipPageWidth(Math.trunc((window.innerWidth - 240) / 2));
         setFlipPageHeight(window.innerHeight - 80); // Header 80px
         getSliderImages("val");
     }, []);
 
-    // Variables del react-pageflip
-    const res = 300;
-    const book = useRef();
-
     return(
         <Main>
-            <Checkbox type="checkbox" name="menu" id="menu" />
-            <IndexSlide>
-                <IndexContainer>
-                    <IndexTitle>ÍNDICE</IndexTitle>
-                    <Index>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(0)}>PORTADA</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(1)}>CERÁMICAS</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(6)}>VIDRIOS</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(8)}>ACEROS</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(12)}>ALUMINIO</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(13)}>TEXTIL</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(18)}>GORRAS</IndexElem>
-                        <IndexElem onClick={e => book.current.pageFlip().flip(19)}>LLAVEROS</IndexElem>
-                    </Index>
-                </IndexContainer>
-                <IndexIcon htmlFor="menu" />
-            </IndexSlide>
+            <PortraitFlipbook>
+                <Checkbox type="checkbox" name="menu" id="menu" />
+                <IndexSlide>
+                    <IndexContainer>
+                        <IndexTitle>ÍNDICE</IndexTitle>
+                        <Index>
+                            <IndexElem onClick={e => flipPage(0)}>PORTADA</IndexElem>
+                            <IndexElem onClick={e => flipPage(1)}>CERÁMICAS</IndexElem>
+                            <IndexElem onClick={e => flipPage(6)}>VIDRIOS</IndexElem>
+                            <IndexElem onClick={e => flipPage(8)}>ACEROS</IndexElem>
+                            <IndexElem onClick={e => flipPage(12)}>ALUMINIO</IndexElem>
+                            <IndexElem onClick={e => flipPage(13)}>TEXTIL</IndexElem>
+                            <IndexElem onClick={e => flipPage(18)}>GORRAS</IndexElem>
+                            <IndexElem onClick={e => flipPage(19)}>LLAVEROS</IndexElem>
+                        </Index>
+                    </IndexContainer>
+                    <IndexIcon htmlFor="menu" />
+                </IndexSlide>
 
-            <FlipbookContainer>
-                {/* <Combo>
-                    <Label htmlFor="catalogue">Catálogo</Label>
-                    <Select name="catalogue" id="catalogue" onChange={e => getSliderImages(e.target.value)}>
-                        <option value="val">10 de Mayo</option>
-                        <option value="old">Normal</option>
-                    </Select>
-                </Combo> */}
-                {
-                    !images ? ( <Loading /> ) :
-                    (
-                        <HTMLFlipBook
-                            width={flipPageWidth}
-                            height={flipPageHeight}
-                            minWidth={flipPageWidth}
-                            minHeight={flipPageHeight}
-                            flippingTime={800}
-                            ref={book}
-                            size={"stretch"}
-                            maxShadowOpacity = {0.8}>
-                        {
-                            images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
-                        }
-                        </HTMLFlipBook>
-                    )
-                }
-            </FlipbookContainer>
+                <FlipbookContainer>
+                    {/* <Combo>
+                        <Label htmlFor="catalogue">Catálogo</Label>
+                        <Select name="catalogue" id="catalogue" onChange={e => getSliderImages(e.target.value)}>
+                            <option value="val">10 de Mayo</option>
+                            <option value="old">Normal</option>
+                        </Select>
+                    </Combo> */}
+                    {
+                        !images ? ( <Loading /> ) :
+                        (
+                            <HTMLFlipBook
+                                width={flipPageWidth}
+                                height={flipPageHeight}
+                                minWidth={flipPageWidth}
+                                minHeight={flipPageHeight}
+                                flippingTime={800}
+                                ref={book}
+                                size={"stretch"}
+                                autoSize={true}
+                                maxShadowOpacity = {0.8}>
+                            {
+                                images.map((image, i) => <Page key={i} image={`https://storage.googleapis.com/assets-impregnarte/${image}`}/>)
+                            }
+                            </HTMLFlipBook>
+                        )
+                    }
+                </FlipbookContainer>
+            </PortraitFlipbook>
             <Next onClick={() => book.current.pageFlip().flipPrev()}>&lt;</Next>
             <Previous onClick={() => book.current.pageFlip().flipNext()}>&gt;</Previous>
-            <Download>Descargar</Download>
+            <Download href='#'>Descargar</Download>
         </Main>
     )
 }
