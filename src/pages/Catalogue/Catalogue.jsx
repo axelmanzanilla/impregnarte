@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ElInput, ElDiv, Main, Combo, Label, Select, ButtonsContainer, Button, FlipbookContainer, Download, Next, Previous } from "./CatalogueStyles";
+import { Main, FlipbookContainer, Download, Next, Previous } from "./CatalogueStyles";
+import { Checkbox, IndexSlide, IndexContainer, IndexIcon, IndexTitle, Index, IndexElem } from "./CatalogueStyles";
 import { Page } from "../../components/Flipbook/FlipbookStyles";
 import Loading from "../../components/Loading/Loading";
 import HTMLFlipBook from "react-pageflip";
@@ -33,21 +34,24 @@ function Catalogue(){
 
     return(
         <Main>
-            {/* <label htmlFor="menu">Cerrar</label> */}
-            <ElInput type="checkbox" name="menu" id="menu" />
-            <ElDiv>
-                <h2>Índice</h2>
-                <label htmlFor="menu">Cerrar2</label>
-                <ul>
-                    <li onClick={e => book.current.pageFlip().flip(1)}>Cerámicas</li>
-                    <li onClick={e => book.current.pageFlip().flip(6)}>Vidrios</li>
-                    <li onClick={e => book.current.pageFlip().flip(8)}>Aceros</li>
-                    <li onClick={e => book.current.pageFlip().flip(12)}>Aluminio</li>
-                    <li onClick={e => book.current.pageFlip().flip(13)}>Textil</li>
-                    <li onClick={e => book.current.pageFlip().flip(18)}>Gorras</li>
-                    <li onClick={e => book.current.pageFlip().flip(19)}>Llaveros</li>
-                </ul>
-            </ElDiv>
+            <Checkbox type="checkbox" name="menu" id="menu" />
+            <IndexSlide>
+                <IndexContainer>
+                    <IndexTitle>ÍNDICE</IndexTitle>
+                    <Index>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(0)}>PORTADA</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(1)}>CERÁMICAS</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(6)}>VIDRIOS</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(8)}>ACEROS</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(12)}>ALUMINIO</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(13)}>TEXTIL</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(18)}>GORRAS</IndexElem>
+                        <IndexElem onClick={e => book.current.pageFlip().flip(19)}>LLAVEROS</IndexElem>
+                    </Index>
+                </IndexContainer>
+                <IndexIcon htmlFor="menu" />
+            </IndexSlide>
+
             <FlipbookContainer>
                 {/* <Combo>
                     <Label htmlFor="catalogue">Catálogo</Label>
@@ -75,7 +79,6 @@ function Catalogue(){
                     )
                 }
             </FlipbookContainer>
-            
             <Next onClick={() => book.current.pageFlip().flipPrev()}>&lt;</Next>
             <Previous onClick={() => book.current.pageFlip().flipNext()}>&gt;</Previous>
             <Download>Descargar</Download>
