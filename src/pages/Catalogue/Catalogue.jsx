@@ -87,7 +87,7 @@ function Catalogue(){
             </PortraitFlipbook>
             <Next onClick={() => book.current.pageFlip().flipPrev()}>&lt;</Next>
             <Previous onClick={() => book.current.pageFlip().flipNext()}>&gt;</Previous>
-            <Download href='#'>Descargar</Download>
+            <Download href='/downloads/Catalogo%2010%20Mayo.pdf' download>Descargar</Download>
         </Main>
     )
 }
